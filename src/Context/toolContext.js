@@ -14,35 +14,87 @@ export const ToolProvider = ({ children }) => {
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorLink, setSponsorLink] = useState('');
   const [show, setShow] = useState(false);
+  const [allPageData, setAllPageData] = useState({
+    currentPage: "",
+    hasLastPage: "",
+    hasPreviousPage: "",
+    nextPage: "",
+    previousPage: "",
+    lastPage: "",
+    totalCount : ""
+  });
   const [metadata, setMetadata] = useState({
     title: '',
     description: '',
     keywords: '',
   });
 
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
   
-  const getPlugins = async () => {
+  const getPlugins = async (options = {}) => {
     try {
-      const response = await axios.get(`${API_URL}/api/plugins`);
+      let apiUrl = `${API_URL}/api/plugins?page=${page}&limit=${limit}`;
+      // Add search functionality
+      if (options.search) {
+        apiUrl += `&search=${options.search}`;
+      }
+      const response = await axios.get(apiUrl);
       setPlugins(response.data.result.data);
+      setAllPageData({
+        currentPage: response.data.currentPage,
+        hasLastPage: response.data.hasLastPage,
+        hasPreviousPage: response.data.hasPreviousPage,
+        nextPage: response.data.nextPage,
+        previousPage: response.data.previousPage,
+        lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
+      });
     } catch (error) {
       console.error("Error fetching items:", error);
     }
   };
 
-  const getGPT = async () => {
+  const getGPT = async (options = {}) => {
     try {
-      const response = await axios.get(`${API_URL}/api/gpttools`);
+      let apiUrl = `${API_URL}/api/gpttools?page=${page}&limit=${limit}`;
+      // Add search functionality
+      if (options.search) {
+        apiUrl += `&search=${options.search}`;
+      }
+      const response = await axios.get(apiUrl);
       setGpt(response.data.result.data);
+      setAllPageData({
+        currentPage: response.data.currentPage,
+        hasLastPage: response.data.hasLastPage,
+        hasPreviousPage: response.data.hasPreviousPage,
+        nextPage: response.data.nextPage,
+        previousPage: response.data.previousPage,
+        lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
+      });
     } catch (error) {
       console.error("Error fetching items:", error);
     }
   };
-  const getBlogs = async () => {
+  const getBlogs = async (options = {}) => {
     try {
-      const response = await axios.get(`${API_URL}/api/blogs`);
-      setBlogs(response.data);
-      // console.log(response.data);
+      let apiUrl = `${API_URL}/api/blogs?page=${page}&limit=${10}`;
+      if (options.search) {
+        apiUrl += `&search=${options.search}`;
+      }
+      const response = await axios.get(apiUrl);
+      setBlogs(response.data.result.data);
+      setAllPageData({
+        currentPage: response.data.currentPage,
+        hasLastPage: response.data.hasLastPage,
+        hasPreviousPage: response.data.hasPreviousPage,
+        nextPage: response.data.nextPage,
+        previousPage: response.data.previousPage,
+        lastPage: response.data.lastPage,
+        totalCount : response.data.totalBlogsCount
+      });
     } catch (error) {
       console.error("Error fetching items:", error);
     }
@@ -78,12 +130,28 @@ export const ToolProvider = ({ children }) => {
 
 
   //for fetching all data
-  const fetchData = async() =>{
+  const fetchData = async(options = {}) =>{
     try {
-      const response = await axios.get(`${API_URL}/api/aitools`);
+      let apiUrl = `${API_URL}/api/aitools?page=${page}&limit=${limit}`;
+
+      // Add search functionality
+      if (options.search) {
+        apiUrl += `&search=${options.search}`;
+      }
+
+      const response = await axios.get(apiUrl);
       setToolData(response.data.result.data);
-    } catch(err) {
-      console.log(err);
+      setAllPageData({
+        currentPage: response.data.currentPage,
+        hasLastPage: response.data.hasLastPage,
+        hasPreviousPage: response.data.hasPreviousPage,
+        nextPage: response.data.nextPage,
+        previousPage: response.data.previousPage,
+        lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
+      });
+    } catch (error) {
+      console.error("Error fetching tools:", error);
     }
   }
 
@@ -97,7 +165,7 @@ export const ToolProvider = ({ children }) => {
 
 
   return (
-    <ToolContext.Provider value={{metadata, handleExportCSV, setMetadata, sponsorLink, setSponsorLink, sponsorName, setSponsorName,show, setShow, toolData, setToolData, filterData, setFilterData, fetchData, plugins, setPlugins, getPlugins, gpt, setGpt,getGPT, categories, setCategories, blogs, setBlogs, getBlogs }}>
+    <ToolContext.Provider value={{page, setPage, allPageData, setAllPageData, metadata, handleExportCSV, setMetadata, sponsorLink, setSponsorLink, sponsorName, setSponsorName,show, setShow, toolData, setToolData, filterData, setFilterData, fetchData, plugins, setPlugins, getPlugins, gpt, setGpt,getGPT, categories, setCategories, blogs, setBlogs, getBlogs }}>
       {children}
     </ToolContext.Provider>
   );

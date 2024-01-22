@@ -1,13 +1,17 @@
-import React, { useEffect,  useState } from "react";
+import React, { useEffect } from "react";
 import styles from "../../../style";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 import Layout from "../../../Layout";
 import {useFront} from "../../../Context";
+import ButtonF from './ButtonF';
 
 const Blogs = () => {
-  const { blogs, dateCount} = useFront();
+  const { blogs, dateCount, setPage, allPageData, page, getBlogs} = useFront();
 
+  useEffect(()=>{
+    getBlogs();
+  },[page])
   return (
     <>
       <Layout
@@ -15,6 +19,7 @@ const Blogs = () => {
         description={
           "AI Dekho is a free website to help you discover top AI tools and software, making your work and life more productive."
         }
+        className='relative'
       >
         <div className={`${styles.paddingX}  mt-[-12vh] pt-[12vh] navbg`}>
           <div className="mt-7 mb-20">
@@ -67,6 +72,7 @@ const Blogs = () => {
             </Link>
           ))}
         </div>
+          <ButtonF setPage={setPage} allPageData={allPageData}/>
       </Layout>
     </>
   );

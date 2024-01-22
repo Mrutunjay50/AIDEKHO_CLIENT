@@ -38,7 +38,7 @@ const Plugin = () => {
         </div>
         <div className=" justify-between items-center w-full mb-2 px-3 md:px-0">
           <h1 className="flex-1 font-poppins font-normal  text-[13px]  ss:text-[18px] xs:text-[18px] md:text-[18px] text-white text-center ">
-            Discover <span className="text-[#23CD15]">{allPageData?.lastPage * 12} Plugins </span>in{" "}
+            Discover <span className="text-[#23CD15]">{allPageData?.totalCount} Plugins </span>in{" "}
             <span className="text-[#23CD15]">{categories?.length} Categories</span> - Handpicked
             and Updated Daily
           </h1>

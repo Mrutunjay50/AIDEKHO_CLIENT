@@ -61,7 +61,7 @@ const Home = () => {
       <div className="min-h-[100vh] mt-[-12vh] pt-[12vh] bgcolor " >
         <div className="navbg mt-[-12vh] pt-[15vh]">
           <Hero
-            tools={allPageData?.lastPage * 12}
+            tools={allPageData?.totalCount}
             show={show}
             sponsorName={sponsorName}
             sponsorLink={sponsorLink}

@@ -5,7 +5,6 @@ import { useTool } from "../../../Context";
 import ToolListHead from "../toolStructure/ToolListHead";
 import Button from "../toolStructure/Button";
 import { useHandleDelete, useFilterData } from "../../hooks/useFilter&Delete";
-import usePagination from "../../hooks/usePagination";
 
 
 const ToolsList = () => {
@@ -13,32 +12,28 @@ const ToolsList = () => {
     toolData,
     setToolData,
     fetchData,
-    handleExportCSV
+    handleExportCSV,
+    page, setPage, allPageData
   } = useTool();
-  const [searchQuery, setSearchQuery] = useState("");
   const [added, setAdded] = useState(false);
-  const itemsPerPage = 10;
+  const [searchQuery, setSearchQuery] = useState(undefined);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+
+    if (searchQuery) {
+      fetchData({ search: searchQuery });
+    }
+    setPage(1);
+  };
   const type = "aiTool";
 
 
   const handleDelete = useHandleDelete(toolData, setToolData);
-  const filteredData = useFilterData(toolData, searchQuery);
-  const { currentItems, goToNextPage, goToPrevPage, currentPage, setCurrentPage } = usePagination(filteredData, itemsPerPage);
-
-
-  const getSerialNumber = (index) => {
-    return (currentPage - 1) * itemsPerPage + index;
-  };
-
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-  };
 
   useEffect(() => {
-    fetchData();
-  }, [added]);
+    fetchData({ search: searchQuery });
+  }, [added, page]);
   
 
   return (
@@ -59,7 +54,7 @@ const ToolsList = () => {
             placeholder="search bar"
           />
           <div className="w-[15%] p-3 bg-[#c5c4c4] rounded-lg cursor-pointer text-[#4d4c4c] text-center">
-            total {toolData?.length}
+            total {allPageData.lastPage * 10}
           </div>
           <div onClick={() => handleExportCSV(type)} className="w-[25%] p-3 bg-[rgb(66,188,9)] rounded-lg text-white text-center cursor-pointer">
             download button
@@ -67,11 +62,11 @@ const ToolsList = () => {
         </div>
       </div>
       <ToolListHead type={type}/>
-      {currentItems ? (
-        currentItems.map((item, index) => (
+      {toolData ? (
+        toolData.map((item, index) => (
           <ToolData
             key={index}
-            no={getSerialNumber(index)}
+            no={(allPageData?.currentPage - 1) * 10 + index}
             item={item}
             onDelete={handleDelete}
             type={type}
@@ -82,8 +77,8 @@ const ToolsList = () => {
       ) : (
         <p>Loading....</p>
       )}
-      <Button goToNextPage={goToNextPage} goToPrevPage={goToPrevPage} currentItems={currentItems} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
-    </div>
+      {allPageData?.lastPage > 1 && <Button setPage={setPage} allPageData={allPageData} />}
+      </div>
   );
 };
 

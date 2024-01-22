@@ -25,6 +25,7 @@ export const FrontProvider = ({ children }) => {
     nextPage: "",
     previousPage: "",
     lastPage: "",
+    totalCount : ""
   });
 
   const handleCategoryChange = (category) => {
@@ -75,6 +76,7 @@ export const FrontProvider = ({ children }) => {
         nextPage: response.data.nextPage,
         previousPage: response.data.previousPage,
         lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
       });
     } catch (error) {
       console.error("Error fetching tools:", error);
@@ -101,6 +103,7 @@ export const FrontProvider = ({ children }) => {
         nextPage: response.data.nextPage,
         previousPage: response.data.previousPage,
         lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
       });
     } catch (error) {
       console.error("Error fetching items:", error);
@@ -173,6 +176,7 @@ export const FrontProvider = ({ children }) => {
         nextPage: response.data.nextPage,
         previousPage: response.data.previousPage,
         lastPage: response.data.lastPage,
+        totalCount : response.data.totalToolsCount
       });
     } catch (error) {
       console.error("Error fetching items:", error);
@@ -181,9 +185,9 @@ export const FrontProvider = ({ children }) => {
 
   const getAllBlogs = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/blogs`);
+      const response = await axios.get(`${API_URL}/api/blogs?page=${page}&limit=${4}`);
       // Shuffle the array
-      const shuffledData = response.data.sort(() => Math.random() - 0.5);
+      const shuffledData = response.data.result.data.sort(() => Math.random() - 0.5);
 
       // Take the first 4 items
       const randomFourBlogs = shuffledData.slice(0, 4);
@@ -196,8 +200,16 @@ export const FrontProvider = ({ children }) => {
 
   const getBlogs = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/blogs`);
-      setBlogs(response.data);
+      const response = await axios.get(`${API_URL}/api/blogs?page=${page}&limit=${6}`);
+      setBlogs(response.data.result.data);
+      setAllPageData({
+        currentPage: response.data.currentPage,
+        hasLastPage: response.data.hasLastPage,
+        hasPreviousPage: response.data.hasPreviousPage,
+        nextPage: response.data.nextPage,
+        previousPage: response.data.previousPage,
+        lastPage: response.data.lastPage,
+      });
     } catch (error) {
       console.error("Error fetching items:", error);
     }

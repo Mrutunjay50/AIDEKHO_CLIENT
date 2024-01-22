@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ToolListHead from "../toolStructure/ToolListHead";
-import Button from "../toolStructure/Button";
 import axios from "axios";
 import ToolData from "../toolStructure/ToolData";
 import { useHandleDelete, useFilterData } from "../../hooks/useFilter&Delete";
@@ -22,7 +21,7 @@ const TopPicks = () => {
 
   const getTopPicks = async () => {
     try {
-      const response = await axios.get(`{API_URL}/api/toppicks`);
+      const response = await axios.get(`${API_URL}/api/toppicks`);
       setTopPickTools(response.data);
     } catch (error) {
       console.error("Error fetching items:", error);
@@ -80,8 +79,16 @@ const TopPicks = () => {
         <p>Loading....</p>
       )}
       {/* Pagination */}
-      <Button goToNextPage={goToNextPage} goToPrevPage={goToPrevPage} currentItems={currentItems} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
-    </div>
+      <div className="absolute top-[20%] right-10 text-[24px]">
+        <button onClick={goToPrevPage} disabled={currentPage === 1}>
+        &#11164;
+        </button>
+        <span>{" "} {currentPage} {" "} </span>
+        <button onClick={goToNextPage} disabled={currentItems?.length < itemsPerPage}>
+        &#11166;
+        </button>
+      </div>
+      </div>
   );
 };
 

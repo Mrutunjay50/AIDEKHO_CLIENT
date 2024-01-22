@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHandleDelete } from "../../hooks/useFilter&Delete";
-import usePagination from "../../hooks/usePagination";
 import { useTool } from "../../../Context";
 import { useAuth } from "../../loginContext";
 import { Link } from "react-router-dom";
@@ -44,9 +43,8 @@ const BodyComp = ({item, index, delTool, no}) =>{
 
 const Blog = () => {
   const {tokenId} = useAuth();
-  const { blogs, setBlogs,getBlogs } = useTool();
-  const [searchQuery, setSearchQuery] = useState("");
-  const itemsPerPage = 10;
+  const { blogs, setBlogs,getBlogs, setPage, allPageData, page } = useTool();
+  const [searchQuery, setSearchQuery] = useState(undefined);
   
 
   const delTool = async (id) => {
@@ -64,30 +62,18 @@ const Blog = () => {
   };
 
   const handleDelete = useHandleDelete(blogs, setBlogs);
-  const filteredBlogs = blogs?.filter((item) => {
-    // Normalize search query and item properties for case-insensitive comparison
-    const normalizedQuery = searchQuery?.toLowerCase();
-    const normalizedName = item.blogTitle?.toLowerCase();
-    const normalizedContent = item.blogContent?.toLowerCase();
-    const normalizedAuthorName = item.authername?.toLowerCase();
-
-    // Check if any of the fields includes the search query
-    return normalizedName?.includes(normalizedQuery) || normalizedContent?.includes(normalizedQuery) || normalizedAuthorName?.includes(normalizedQuery);
-  });
-
-  const { currentItems, goToNextPage, goToPrevPage, currentPage, setCurrentPage } = usePagination(filteredBlogs, itemsPerPage);
-
-  const getSerialNumber = (index) => {
-    return (currentPage - 1) * itemsPerPage + index;
-  };
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1);
+
+    if (searchQuery) {
+      getBlogs({ search: searchQuery });
+    }
+    setPage(1);
   };
   
   useEffect(() => {
-    getBlogs();
-  }, []);
+    getBlogs({ search: searchQuery });
+  }, [page]);
   return (
     <div className="w-[80%] bg-slate-100 ml-[20%] p-2 min-h-[100vh] relative overflow-x-hidden">
       <div className="">
@@ -107,7 +93,7 @@ const Blog = () => {
           />
 
           <div className="w-[15%] p-3 bg-[#c5c4c4] rounded-lg cursor-pointer text-[#4d4c4c] text-center">
-            total {blogs?.length}
+            total {allPageData.totalCount}
           </div>
         </div>
       </div>
@@ -120,9 +106,8 @@ const Blog = () => {
         <li className="w-[10%] text-center">Date&Time</li>
         <li className="w-[6%] text-center">Actions</li>
       </ul>
-      {currentItems?.map((item, index) => <BodyComp item={item} index={index} key={index} delTool={delTool} no={getSerialNumber(index)}/>)}
-      <Button goToNextPage={goToNextPage} goToPrevPage={goToPrevPage} currentItems={currentItems} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
-      
+      {blogs?.map((item, index) => <BodyComp item={item} index={index} key={index} delTool={delTool} no={(allPageData?.currentPage - 1) * 10 + index}/>)}
+      {allPageData?.lastPage > 1 && <Button setPage={setPage} allPageData={allPageData} />}
     </div>
   );
 };
