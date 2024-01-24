@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useFront } from "../../Context";
 import styles from '../../style';
 
-const Categories = () => {
+
+const Categories = (resultsRef) => {
   const [showAllButtons, setShowAllButtons] = useState(false);
   const [buttonsToShow, setButtonsToShow] = useState(18);
 

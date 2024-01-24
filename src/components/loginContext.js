@@ -58,9 +58,10 @@ export const AuthProvider = ({ children }) => {
         // Token has expired, you may want to redirect to the login page
         document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("isAdmin");
         setUserData(null);
         navigate("/login");
-      }
+      }
     }
   },[]);
 

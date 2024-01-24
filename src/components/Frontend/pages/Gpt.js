@@ -27,7 +27,11 @@ const Gpt = () => {
     allPageData,
   } = useFront();
   const resultRef = useRef();
-
+  const handleExploreClick = () => {
+    console.log("Explore Clicked");
+    // Add any logic or debugging messages here
+  };
+ 
   useEffect(() => {
     setPage(1);
   }, [selectedSort, selectedCategory]);
@@ -37,18 +41,19 @@ const Gpt = () => {
   }, [page, selectedSort, selectedCategory]);
 
   return (
-    <Layout
+    <Layout 
       title={"AIDekho- GPTs"}
       description={
-        "AI Dekho is a free website to help you discover top AI tools and software, making your work and life more  productive."
+        "AI Dekho is a free website to help you discover top AI tools and software, making your work and life more productive."
       }
     >
-      <div id={theme}>
-        <div className="min-h-[100vh] mt-[-12vh] pt-[12vh] bgcolor">
+      <div id={theme} >
+        <div className="min-h-[100vh] mt-[-12vh] pt-[12vh] bgcolor"  >
           <div className="navbg mt-[-12vh] pt-[12vh]">
-            <section className={` ${styles.paddingY} pt-11`}>
+            <section className={` ${styles.paddingY} pt-11` }>
+             
               <div className=" justify-between items-center w-full">
-                <h1 className="flex-1 font-poppins font-semibold  text-[35px]  ss:text-[42px] xs:text-[30px] md:text-[57px] text-white text-center">
+                <h1 className="flex-1 font-poppins font-semibold  text-[35px]  ss:text-[42px] xs:text-[30px] md:text-[57px] text-white text-center" >
                   Explore Best GPT Tools
                 </h1>
               </div>

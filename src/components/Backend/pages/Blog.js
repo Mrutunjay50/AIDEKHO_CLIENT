@@ -107,7 +107,9 @@ const Blog = () => {
         <li className="w-[6%] text-center">Actions</li>
       </ul>
       {blogs?.map((item, index) => <BodyComp item={item} index={index} key={index} delTool={delTool} no={(allPageData?.currentPage - 1) * 10 + index}/>)}
-      {allPageData?.lastPage > 1 && <Button setPage={setPage} allPageData={allPageData} />}
+      <div className="flex justify-center items-center mt-5 mb-5">
+       <Button setPage={setPage} allPageData={allPageData} />
+       </div>
     </div>
   );
 };

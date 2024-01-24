@@ -108,13 +108,13 @@ const BlogView = () => {
               <div
                 
                 onClick={()=>  resultRef.current.scrollIntoView({ behavior: 'smooth' })}
-                className="w-lg  md:h-[30vh] h-[25vh]  mx-3 my-1 rounded-2xl blog-card relative"
+                className="w-lg  md:h-[30vh] h-[25vh] sm:h-[20vh]  mx-3 my-1 rounded-2xl blog-card relative"
               >
                 <div className="flex">
                   <img
                     src={c.coverUrl}
                     alt="Card Image"
-                    className="w-2/5 md:h-[30vh] h-[25vh]  object-cover rounded-l-2xl"
+                    className="w-2/5 md:h-[30vh] h-[25vh] sm:h-[20vh] object-cover rounded-l-2xl"
                   />
                   <div className="px-3 mt-1 md:mt-0 ss:p-3 md:p-9 ">
                     <h2 className=" text-md md:text-2xl font-medium card-title w-[142px] md:w-full overflow-hidden">

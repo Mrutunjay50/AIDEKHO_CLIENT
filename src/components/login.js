@@ -65,15 +65,20 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
   return (
    
-    <div className="w-full bg-primary md:p-2 min-h-[100vh] flex justify-center gap-10 items-center text-white ">
+    <div className="w-full bg-primary md:p-2 min-h-[100vh] flex justify-center gap-5 md:gap-10 items-center text-white ">
       <ToastContainer hideProgressBar autoClose={"3000"} />
-      <div className="md:flex md:flex-1 md:justify-evenly w-full mr-10 ">
-        <div className="mt-10 md:mt-28 mb-8 md:mb-0">
+      <div className="md:flex md:flex-1 md:justify-evenly  mr-10 ">
+        <div className="mt-10 sm:mt-0 md:mt-28 mb-8 md:mb-0">
           <Link to="/">
             <img
-              src="/logo.png"
+              src="/logof.png"
               alt=""
               className="md:w-[350px] w-[200px] md:h-[90px] h-[50px] cursor-pointer"
             />
@@ -83,7 +88,7 @@ const Login = () => {
           </span>
         </div>
 
-        <div className="sm:w-[50%] md:w-[35%] bg-primary border-2 border-gray-500 rounded-lg p-5 flex flex-col gap-5 text-[20px] relative">
+        <div className="w-[107%] md:w-[35%]  bg-primary border-2 border-gray-500 rounded-lg p-5 flex flex-col gap-5 text-[20px] relative">
           <p className="text-[32px] md:text-[24px] font-medium text-center">
             Login
           </p>
@@ -97,7 +102,7 @@ const Login = () => {
               placeholder="Enter Your Email..."
               onChange={handleChange}
               required
-              className="rounded-md focus:outline-none px-3 py-1 bg-[#232930] h-[7vh]"
+              className="rounded-md focus:outline-none px-3 py-1 bg-[#232930] h-[7vh] placeholder:text-[13px]"
             />
           </div>
 
@@ -109,14 +114,15 @@ const Login = () => {
               id="password"
               placeholder="Enter Your Password..."
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               required
-              className="rounded-md focus:outline-none px-3 py-1 bg-[#232930] h-[7vh]"
+              className="rounded-md focus:outline-none px-3 py-1 bg-[#232930] h-[7vh] placeholder:text-[13px]"
             />
           </div>
 
           <div
             onClick={handleLogin}
-            className="border-2 h-[7vh] rounded-md w-full md:w-[100%] mt-5 py-1 cursor-pointer bg-[#0bdf40] font-medium text-white flex justify-center items-center"
+            className="border-2 h-[7vh] sm:h-[4vh] md:h-[7vh] rounded-md w-full md:w-[100%] mt-5 py-1 cursor-pointer bg-[#0bdf40] font-medium text-white flex justify-center items-center"
           >
             Log In
           </div>
@@ -124,7 +130,8 @@ const Login = () => {
           <div className="flex justify-around items-center -mt-2">
           <div
           onClick={login}
-          className="border-2 h-12 rounded-md w-full py-2 cursor-pointer bg-[#ffffff] font-medium text-black flex justify-center items-center"
+         
+          className="border-2 h-12  rounded-md w-full py-2 cursor-pointer bg-[#ffffff] font-medium text-black flex justify-center items-center"
         >
           <FcGoogle size={35} />
           <span className="px-2 text-lg">Continue with Google</span>

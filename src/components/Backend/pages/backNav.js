@@ -23,7 +23,7 @@ const BackNav = () => {
           <li>Top Picks</li>
         </Link>
         <Link className="border-2 border-transparent py-2 hover:border-white rounded-md cursor-pointer" to="/admin/gpttools" >
-          <li>Chat GPT</li>
+          <li>GPT</li>
         </Link>
         <Link className="border-2 border-transparent py-2 hover:border-white rounded-md cursor-pointer" to="/admin/plugins" >
           <li>Plugins</li>

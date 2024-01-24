@@ -18,6 +18,13 @@ const Searchbar = ({type, className, className1, resultsRef}) => {
     resultsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    
+}
+};
+
   return (
     <div className={`${className} gap-2 ${className1} md:mt-5 mt-2`}>
       
@@ -30,6 +37,7 @@ const Searchbar = ({type, className, className1, resultsRef}) => {
           placeholder=" Find AI Tools with Any Keyword..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           required
         />
       </div>
@@ -38,7 +46,7 @@ const Searchbar = ({type, className, className1, resultsRef}) => {
         onClick={handleSearch}
         className="px-3 py-2.5 md:ms-5 ms-20 flex items-center text-sm text-white bg-[#23CD15] rounded md:rounded-full cursor-pointer"
       >
-        <FaSearch size={20} /><span className='px-2 font-poppins hidden md:block'>Search</span>
+        <FaSearch size={20} /><span className='px-2 font-poppins hidden md:block' >Search</span>
       </span>
     </div>
   );

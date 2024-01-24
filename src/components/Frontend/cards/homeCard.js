@@ -103,7 +103,7 @@ const HomeCard = ({ item, type, userData, saved, setSaveData, className, getTopP
           </h3>
         </div>
       )}
-      {type === "aiTool" || type === "gptTool" ? (
+      {type === "aiTool" || type === "gptTool" || type === "pluginTool" ? (
         <div className="flex items-center justify-between card-title pe-3 ">
         <h3 className="text-xl font-bold card-title mt-4">{item.name}</h3>
         <p className="flex items-center  mt-4 ">

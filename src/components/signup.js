@@ -58,20 +58,25 @@ const Signup = () => {
   };
   
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSignup();
+    }
+  };
   return (
     
     <div className="w-full bg-primary p-2 min-h-screen flex flex-col md:flex-row justify-center items-center text-white">
     <ToastContainer hideProgressBar autoClose={'3000'}/>
- <div className="md:flex md:flex-1 md:justify-evenly">
+ <div className="md:flex md:flex-1 md:justify-evenly ">
     <div className="mt-10 md:mt-36 mb-8 md:mb-0">
       <Link to="/">
         <img
-          src="/logo.png"
+          src="/logof.png"
           alt=""
           className="md:w-[350px] w-[200px] md:h-[90px] h-[50px] cursor-pointer"
         />
       </Link>
-      <span className="text-[15px] md:px-[85px] px-[20px] ">Find The Best AI Tools & Websites</span>
+      <span className="text-[20px] md:px-[85px] px-[20px] ">Find The Best AI Tools & Websites</span>
     </div>
 
     <div className="w-full md:w-3/4 lg:w-1/3 xl:w-1/4 bg-primary border-2 border-gray-500 rounded-lg p-4 flex flex-col gap-2 text-lg relative">
@@ -79,7 +84,7 @@ const Signup = () => {
       <div className="flex flex-col gap-2">
         <span>Name</span>
         <input
-          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930]"
+          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930] placeholder:text-[13px]"
           type="text"
           name="name"
           id="name"
@@ -95,7 +100,7 @@ const Signup = () => {
           name="email"
           id="email"
           placeholder="Enter Your Email..."
-          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930]"
+          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930] placeholder:text-[13px]"
           onChange={handleChange}
           required
         />
@@ -107,7 +112,7 @@ const Signup = () => {
           name="password"
           placeholder="Enter Your Password..."
           id="pass"
-          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930]"
+          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930] placeholder:text-[13px]"
           onChange={handleChange}
           required
         />
@@ -119,15 +124,16 @@ const Signup = () => {
           name="confirmPassword"
           id="cpass"
           placeholder="Enter Your confirm Password..."
-          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930]"
+          className="rounded-md focus:outline-none px-3 py-2 bg-[#232930] placeholder:text-[13px]"
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           required
         />
       </div>
 
       <div
         onClick={handleSignup}
-        className="border-2 h-12 rounded-md mt-2 w-full py-2 cursor-pointer bg-[#0bdf40] font-medium text-white flex justify-center items-center"
+        className="border-2 h-12  rounded-md mt-2 w-full py-2 cursor-pointer bg-[#0bdf40] font-medium text-white flex justify-center items-center"
       >
         Register
       </div>

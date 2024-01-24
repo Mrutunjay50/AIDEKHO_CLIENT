@@ -13,6 +13,11 @@ const Nav = () => {
   const path = window.location.pathname;
   const [toggle, SetToggle] = useState(false);
   const isBlogPage =  path.includes('/blogs/');
+
+  const closeMenu = () => {
+    SetToggle(false);
+  };
+
   
   return (
     <div className={`px-3 md:px-6   ${isBlogPage ? 'bg-[#135bb0]' : 'bg-transparent'} `} id={theme}>
@@ -36,9 +41,7 @@ const Nav = () => {
       <li className={`font-poppins font-normal cursor-pointer text-[16px] text-white mr-10 alpha ${path === '/blogs' ? "alpha2" : path.includes('/blogs') && "alpha2"}`}>
         <Link to= {"/blogs"} > Blogs </Link>
       </li>
-      {userData ? (userData?.profilePicture ? <><Link to='/cart' className='cursor-pointer pe-2 absolute save-page '>
-      <FaBookmark color='#23CD15' size={25} />
-      </Link><li>
+      {userData ? (userData?.profilePicture ? <><li>
         <img className='w-[39px] h-[39px] rounded-3xl' src={userData?.profilePicture} alt="" />
         
       </li></> : <li>
@@ -46,20 +49,24 @@ const Nav = () => {
       </li>): <li className="font-poppins font-medium cursor-pointer text-[16px] text-white mr-10 inline-flex justify-center items-center "><FcGoogle size={20}/>
         <Link to= {"/login"} className='px-1' >  Login/Signup </Link>
       </li>}
+      {userData && <Link to='/cart' className='cursor-pointer pe-2 absolute save-page '>
+      <FaBookmark color='#23CD15' size={25} />
+      </Link>}
      </ul>
 
 {/* Mobile responsive nav bar */}
-    <div className='md:hidden flex flex-1 justify-end items-center '>
+    <div className='md:hidden flex flex-1 justify-end items-center  '>
     {userData ? (userData?.profilePicture ? <><span>
         <img className='w-[35px] h-[35px] rounded-3xl mr-3 md:mr-0' src={userData?.profilePicture} alt="img" />
         
-      </span><Link to='/cart' className ='cursor-pointer pe-2 px-1 absolute save-page '>
-      <FaBookmark  color='#23CD15' />
-      </Link></> : <span>
+      </span></> : <span>
       <span className='px-3 py-2 w-[35px] h-[35px] bg-green-500 text-white font-bold text-[25px]'> {userData?.name.substring(0,1)}</span>
       </span>): <span className="font-poppins font-normal cursor-pointer text-[14px] text-white mr-2 inline-flex justify-center items-center">
       <FcGoogle/><Link to= {"/login"} className='px-1' > Login/Signup </Link>
       </span>}
+      {userData && <Link to='/cart' className ='cursor-pointer pe-2 px-1 absolute save-page '>
+      <FaBookmark  color='#23CD15' size ={20} />
+      </Link>}
   
       <img src={toggle ? close : menu} alt="menu"
       className='w-[25px] h-[25px] object-contain' 
@@ -72,19 +79,19 @@ const Nav = () => {
         <ul className='list-none flex justify-end items-start flex-1 flex-col'>
 
         <li className= "font-poppins font-medium cursor-pointer text-[16px] text-white mr-4 py-2">
-        <Link to= "/"> Home </Link>
+        <Link to= "/" onClick={closeMenu }> Home </Link>
       </li>
       <li className="`font-poppins font-medium cursor-pointer text-[16px] text-white mr-4 py-2">
-        <Link to= {"/top"}> Top Picks </Link>
+        <Link to= {"/top"} onClick={closeMenu }> Top Picks </Link>
       </li>
       <li className="`font-poppins font-medium cursor-pointer text-[16px] text-white mr-4 py-2">
-        <Link to= {"/gpts"}> GPT </Link>
+        <Link to= {"/gpts"} onClick={closeMenu }> GPT </Link>
       </li>
       <li className="`font-poppins font-medium cursor-pointer text-[16px] text-white mr-4 py-2">
-        <Link to= {"/plugins"}> Plugins </Link>
+        <Link to= {"/plugins"} onClick={closeMenu }> Plugins </Link>
       </li>
       <li className="`font-poppins font-medium cursor-pointer text-[16px] text-white mr-4 py-2">
-        <Link to= {"/blogs"}> Blogs </Link>
+        <Link to= {"/blogs"} onClick={closeMenu }> Blogs </Link>
       </li>
         </ul>
       </div>

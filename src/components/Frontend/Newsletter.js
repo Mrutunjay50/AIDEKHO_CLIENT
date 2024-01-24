@@ -30,7 +30,7 @@ const Popup = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setPopupOpen(true);
-    }, 3000);
+    }, 15000);
 
     return () => clearTimeout(timeoutId);
   }, []);

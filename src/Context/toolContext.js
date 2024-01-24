@@ -5,6 +5,9 @@ import { API_URL } from "../util";
 const ToolContext = createContext();
 
 export const ToolProvider = ({ children }) => {
+  const [aiCount, setaiCount] = useState();
+  const [gptCount, setgptCount] = useState();
+  const [pluginCount, setpluginCount] = useState();
   const [toolData, setToolData] = useState();
   const [filterData, setFilterData] = useState(null);
   const [plugins, setPlugins] = useState(null);
@@ -51,6 +54,7 @@ export const ToolProvider = ({ children }) => {
         lastPage: response.data.lastPage,
         totalCount : response.data.totalToolsCount
       });
+      setpluginCount(response.data.totalToolsCount)
     } catch (error) {
       console.error("Error fetching items:", error);
     }
@@ -74,6 +78,7 @@ export const ToolProvider = ({ children }) => {
         lastPage: response.data.lastPage,
         totalCount : response.data.totalToolsCount
       });
+      setgptCount(response.data.totalToolsCount)
     } catch (error) {
       console.error("Error fetching items:", error);
     }
@@ -117,6 +122,23 @@ export const ToolProvider = ({ children }) => {
     }
   };
 
+  const handleExportCSVUsers = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/export-csv-users`); // Replace with your actual server URL and port
+      const blob = new Blob([response.data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'exportedData.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error exporting CSV:', error);
+    }
+  };
+
   const getCategories = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/categories`);
@@ -150,6 +172,7 @@ export const ToolProvider = ({ children }) => {
         lastPage: response.data.lastPage,
         totalCount : response.data.totalToolsCount
       });
+      setaiCount(response.data.totalToolsCount)
     } catch (error) {
       console.error("Error fetching tools:", error);
     }
@@ -165,7 +188,7 @@ export const ToolProvider = ({ children }) => {
 
 
   return (
-    <ToolContext.Provider value={{page, setPage, allPageData, setAllPageData, metadata, handleExportCSV, setMetadata, sponsorLink, setSponsorLink, sponsorName, setSponsorName,show, setShow, toolData, setToolData, filterData, setFilterData, fetchData, plugins, setPlugins, getPlugins, gpt, setGpt,getGPT, categories, setCategories, blogs, setBlogs, getBlogs }}>
+    <ToolContext.Provider value={{page, setPage, allPageData, setAllPageData, metadata, handleExportCSV, setMetadata, sponsorLink, setSponsorLink, sponsorName, setSponsorName,show, setShow, toolData, setToolData, filterData, setFilterData, fetchData, plugins, setPlugins, getPlugins, gpt, setGpt,getGPT, categories, setCategories, blogs, setBlogs, getBlogs, pluginCount, gptCount, aiCount, handleExportCSVUsers }}>
       {children}
     </ToolContext.Provider>
   );

@@ -56,7 +56,7 @@ const Footer = () => {
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3">
         <div>
           <p className="font-medium card-desc">Quick Links</p>
-          <ul className="mt-6 space-y-4 text-sm">
+          <ul className="md:mt-6 mt-3 space-y-4 text-sm">
             <li>
               <Link to ="/" className="card-desc"> Home</Link>
             </li>
@@ -76,7 +76,7 @@ const Footer = () => {
         </div>
         <div>
           <p className="font-medium card-desc pt-7 md:pt-0">Our Terms</p>
-          <ul className="mt-6 space-y-4 text-sm">
+          <ul className="mt-3 md:mt-6 space-y-4 text-sm">
             <li>
               <a href="#" onClick={openTermsPopup} className="card-desc transition hover:opacity-75"> Terms & Conditions </a>
             </li>
@@ -92,7 +92,7 @@ const Footer = () => {
      <div>
      <div className=''>
      <h2 className='font-semibold pt-6 md:pt-0'>Get In Touch </h2>
-     <p className='mt-5'>contact@aidekho.io</p>
+     <p className='mt-3 md:mt-5'>contact@aidekho.io</p>
      </div>
            <h1 className='text-xl font-bold md:mt-5 mt-7'>Subscribe To Our Newsletter</h1>
          

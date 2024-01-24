@@ -231,6 +231,7 @@ export const FrontProvider = ({ children }) => {
 
   useEffect(() => {
     getBlogs();
+    fetchTools();
   }, []);
 
   return (

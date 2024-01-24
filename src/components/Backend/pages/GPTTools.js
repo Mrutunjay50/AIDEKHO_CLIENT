@@ -80,8 +80,9 @@ const GPTTools = () => {
       ) : (
         <p>Loading....</p>
       )}
-
-      {allPageData?.lastPage > 1 && <Button setPage={setPage} allPageData={allPageData} />}
+<div className="flex justify-center items-center mt-3 mb-5flex justify-center items-center mt-3 mb-5">
+       <Button setPage={setPage} allPageData={allPageData} />
+       </div>
     </div>
   );
 };
